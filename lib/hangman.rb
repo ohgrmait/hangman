@@ -12,9 +12,10 @@ class Hangman
 
   def play_game
     secret_word = @game.create_word
-    "secret word: #{secret_word}"
+    puts "secret word: #{secret_word}"
+    @game.create_board
   end
 end
 
 hangman = Hangman.new
-puts hangman.start_game
+hangman.start_game
