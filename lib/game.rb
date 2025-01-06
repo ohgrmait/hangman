@@ -5,6 +5,7 @@ class Game
     @board = nil
     @player = Human.new
     @host = Computer.new
+    @incorrect_letters = []
   end
 
   def create_word
@@ -26,5 +27,16 @@ class Game
       print "#{elem} "
     end
     puts ''
+  end
+
+  def update_display
+    unless @word.include?(@guess)
+      @incorrect_letters.push(@guess)
+      return
+    end
+
+    @word.chars.each_with_index do |w, idx|
+      @board[idx] = @guess if w == @guess
+    end
   end
 end

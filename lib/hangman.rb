@@ -28,6 +28,8 @@ class Hangman
       @game.guess_letter
 
       puts ''
+
+      @game.update_display
     end
   end
 end
