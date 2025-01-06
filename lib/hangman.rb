@@ -12,8 +12,17 @@ class Hangman
   end
 
   def play_game
-    secret_word = @game.create_word
-    puts "secret word: #{secret_word}"
+    print 'Do you want to load your saved game? '
+    answer = gets.chomp
+    if answer == 'y'
+      @game.deserialize
+      puts ''
+      puts "secret word: #{@game.word}"
+    else
+      puts ''
+      secret_word = @game.create_word
+      puts "secret word: #{secret_word}"
+    end
 
     puts ''
 
@@ -32,6 +41,13 @@ class Hangman
                @game.board.all? { |w| w >= 'a' && w <= 'z' }
 
       puts ''
+
+      print 'Do you want to save and exit at this point? '
+      choice = gets.chomp
+      if choice == 'y'
+        @game.serialize
+        break
+      end
 
       print 'guess the letters: '
       @game.guess_letter

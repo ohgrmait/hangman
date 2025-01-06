@@ -1,5 +1,7 @@
+require 'yaml'
+
 class Game
-  attr_reader :incorrect_letters, :board
+  attr_reader :incorrect_letters, :board, :word
 
   def initialize
     @word = nil
@@ -21,7 +23,11 @@ class Game
   end
 
   def create_board
-    @board = Array.new(@word.length, '_')
+    if @board.nil?
+      @board = Array.new(@word.length, '_')
+    elsif @board.any? { |e| e >= 'a' && e <= 'z' }
+      @board
+    end
   end
 
   def current_display
@@ -51,5 +57,36 @@ class Game
     puts "\t\t  |     / \\    " if @incorrect_letters.size > 5
     puts "\t\t  |    |   |    " if @incorrect_letters.size > 6
     puts "\t\t   -------------" if @incorrect_letters.size > 7
+  end
+
+  def serialize
+    Dir.mkdir('saves') unless Dir.exist?('saves')
+    File.open('saves/save.yaml', 'w') do |file|
+      file.puts YAML.dump({
+                            word: @word,
+                            guess: @guess,
+                            board: @board,
+                            player: @player,
+                            host: @host,
+                            incorrect_letters: @incorrect_letters
+                          }, aliases: true,
+                             permitted_classes: [Computer, Human, Game, Symbol])
+    end
+  end
+
+  def set_everything(loaded_game)
+    @word = loaded_game[:word]
+    @guess = loaded_game[:guess]
+    @board = loaded_game[:board]
+    @player = loaded_game[:player]
+    @host = loaded_game[:host]
+    @incorrect_letters = loaded_game[:incorrect_letters]
+  end
+
+  def deserialize
+    File.open('saves/save.yaml', 'r') do |file|
+      loaded_game = YAML.safe_load(file, aliases: true, permitted_classes: [Computer, Human, Game, Symbol])
+      set_everything(loaded_game)
+    end
   end
 end
