@@ -41,4 +41,15 @@ class Game
       @board[idx] = @guess if w == @guess
     end
   end
+
+  def draw_hangman
+    puts "\t\t   -------------" if @incorrect_letters.size > 0
+    puts "\t\t  |      |      " if @incorrect_letters.size > 1
+    puts "\t\t  |      O      " if @incorrect_letters.size > 2
+    puts "\t\t  |     /|\\    " if @incorrect_letters.size > 3
+    puts "\t\t  |      |      " if @incorrect_letters.size > 4
+    puts "\t\t  |     / \\    " if @incorrect_letters.size > 5
+    puts "\t\t  |    |   |    " if @incorrect_letters.size > 6
+    puts "\t\t   -------------" if @incorrect_letters.size > 7
+  end
 end

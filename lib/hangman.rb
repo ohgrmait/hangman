@@ -39,6 +39,10 @@ class Hangman
       puts ''
 
       @game.update_display
+
+      @game.draw_hangman
+
+      puts ''
     end
   end
 end
