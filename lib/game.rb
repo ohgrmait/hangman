@@ -1,4 +1,6 @@
 class Game
+  attr_reader :incorrect_letters
+
   def initialize
     @word = nil
     @guess = nil

@@ -22,6 +22,12 @@ class Hangman
       print 'your current word: '
       @game.current_display
 
+      if @game.incorrect_letters.empty?
+        puts 'incorrect letters: none'
+      else
+        puts "incorrect letters: #{@game.incorrect_letters.join(', ')}"
+      end
+
       puts ''
 
       print 'guess the letters: '
