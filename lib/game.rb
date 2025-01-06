@@ -1,5 +1,5 @@
 class Game
-  attr_reader :incorrect_letters
+  attr_reader :incorrect_letters, :board
 
   def initialize
     @word = nil

@@ -28,6 +28,9 @@ class Hangman
         puts "incorrect letters: #{@game.incorrect_letters.join(', ')}"
       end
 
+      break if @game.incorrect_letters.length == 8 ||
+               @game.board.all? { |w| w >= 'a' && w <= 'z' }
+
       puts ''
 
       print 'guess the letters: '
