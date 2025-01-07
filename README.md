@@ -22,6 +22,10 @@
   <img src="./img/demo/demo-part3.gif" alt="Screen cast of Hangman">
   <p></p>
   <p>This is a screen cast of a save and load in the Hangman game.</p>
+
+  <img src="./img/demo/demo-part4.gif" alt="Screen cast of Hangman">
+  <p></p>
+  <p>This is a screen cast of error handling in the Hangman game.</p>
 </div>
 
 ## Technologies
