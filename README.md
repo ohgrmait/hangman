@@ -1,6 +1,8 @@
 <div align="center">
   <h1>Hangman</h1>
 
+  [![Run on Replit](https://replit.com/badge?caption=Run%20on%20Replit)](https://replit.com/@ohgrmait/hangman?v=1)
+
   A Command Line Version of Hangman
 </div>
 
