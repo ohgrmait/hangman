@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'colorize'
 
 require_relative 'game'
 require_relative 'human'
 require_relative 'computer'
 
-class Hangman
+class Hangman # rubocop:disable Style/Documentation
   def initialize
     @game = Game.new
   end
@@ -30,9 +32,17 @@ class Hangman
 
   def load_game
     print '--- Load game(y/n)?'
-      .colorize(background: :blue, color: :white, mode: :bold)
+      .colorize(color: :blue, mode: :bold)
     print ' '
     answer = gets.chomp
+    raise StandardError unless %w[y n].include?(answer)
+  rescue StandardError
+    puts ''
+    puts '--- Invalid input!!'
+      .colorize(background: :red, mode: :bold, color: :light_yellow)
+    puts ''
+    retry
+  else
     if answer == 'y'
       @game.deserialize
       puts ''
@@ -40,15 +50,24 @@ class Hangman
     else
       puts ''
       secret_word = @game.create_word
+      # @game.create_word
       puts "--- secret word: #{secret_word}"
     end
   end
 
   def save_game
     print '--- Save game(y/n)?'
-      .colorize(background: :red, color: :white, mode: :bold)
+      .colorize(color: :red, mode: :bold)
     print ' '
     choice = gets.chomp
+    raise StandardError unless %w[y n].include?(choice)
+  rescue StandardError
+    puts ''
+    puts '--- Invalid input!!'
+      .colorize(background: :red, mode: :bold, color: :light_yellow)
+    puts ''
+    retry
+  else
     return false unless choice == 'y'
 
     @game.serialize
@@ -56,6 +75,21 @@ class Hangman
     puts '--- Your game has been saved. Load to play it!'
       .colorize(color: :red, mode: :bold)
     true
+  end
+
+  def user_input
+    print '--- Guess a letter: '
+    guess = @game.guess_letter
+    raise StandardError unless guess.length == 1 &&
+                               (guess >= 'a' && guess <= 'z')
+  rescue StandardError
+    puts ''
+    puts '--- Invalid input!!'
+      .colorize(background: :red, mode: :bold, color: :light_yellow)
+    puts ''
+    retry
+  else
+    guess
   end
 
   def play_game
@@ -71,7 +105,7 @@ class Hangman
       print '--- Guess the word: '
       @game.current_display
 
-      puts "--- incorrect letters: #{@game.incorrect_letters.join(', ')}" unless @game.incorrect_letters.empty?
+      puts "--- incorrect word: #{@game.incorrect_letters.join(', ')}" unless @game.incorrect_letters.empty?
 
       puts ''
 
@@ -79,8 +113,7 @@ class Hangman
 
       puts ''
 
-      print '--- Guess a letter: '
-      @game.guess_letter
+      user_input
 
       @game.update_display
     end
@@ -93,11 +126,8 @@ class Hangman
         .colorize(color: :green, mode: :bold)
     elsif @game.incorrect_letters.length == 8
       puts ''
-      puts '--- Play again! You used up incorrect guesses.'
+      puts "--- You used all incorrect guesses, word - #{@game.word}."
         .colorize(color: :red, mode: :bold)
     end
   end
 end
-
-hangman = Hangman.new
-hangman.start_game
