@@ -49,6 +49,7 @@ class Game
   end
 
   def draw_hangman
+    puts ''
     puts "\t\t   -------------" if @incorrect_letters.size > 0
     puts "\t\t  |      |      " if @incorrect_letters.size > 1
     puts "\t\t  |      O      " if @incorrect_letters.size > 2
@@ -74,7 +75,7 @@ class Game
     end
   end
 
-  def set_everything(loaded_game)
+  def instance_variables(loaded_game)
     @word = loaded_game[:word]
     @guess = loaded_game[:guess]
     @board = loaded_game[:board]
@@ -86,7 +87,14 @@ class Game
   def deserialize
     File.open('saves/save.yaml', 'r') do |file|
       loaded_game = YAML.safe_load(file, aliases: true, permitted_classes: [Computer, Human, Game, Symbol])
-      set_everything(loaded_game)
+      instance_variables(loaded_game)
+    end
+  end
+
+  def over?
+    if @incorrect_letters.length == 8 ||
+       @board.all? { |w| w >= 'a' && w <= 'z' }
+      true
     end
   end
 end
