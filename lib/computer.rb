@@ -1,4 +1,6 @@
-class Computer
+# frozen_string_literal: true
+
+class Computer # rubocop:disable Style/Documentation
   def initialize
     @dict = File.readlines('google-10000-english-no-swears.txt')
     @words = @dict.reject do |word|
