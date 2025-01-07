@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'yaml'
 
-class Game
+class Game # rubocop:disable Style/Documentation
   attr_reader :incorrect_letters, :board, :word
 
   def initialize
