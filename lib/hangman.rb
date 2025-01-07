@@ -45,13 +45,8 @@ class Hangman # rubocop:disable Style/Documentation
   else
     if answer == 'y'
       @game.deserialize
-      puts ''
-      puts "secret word: #{@game.word}"
     else
-      puts ''
-      secret_word = @game.create_word
-      # @game.create_word
-      puts "--- secret word: #{secret_word}"
+      @game.create_word
     end
   end
 
