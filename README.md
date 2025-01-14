@@ -34,8 +34,8 @@
 - ***Git***
 - ***CLI***
 - ***Ruby***
+- ***Replit***
 - ***GitHub***
-- ***GitHub Pages***
 
 ## Setup & Usage
 
